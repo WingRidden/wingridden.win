@@ -170,8 +170,11 @@ const setTheme = (deg, mono) => {
   s.setProperty('--rot', deg + 'deg'); s.setProperty('--gray', mono ? 1 : 0); s.setProperty('--con', mono ? 1.2 : 1);
 };
 
-/* glitch on every image click — intensity controls how wild it gets (0–1) */
+const isMobile = () => window.innerWidth <= 650 || ('ontouchstart' in window && window.innerWidth < 1024);
+
+/* glitch on every image click — skipped on mobile to keep it snappy */
 function imageGlitch(mono) {
+  if (isMobile()) return;
   document.body.classList.remove('pg'); void document.body.offsetWidth; document.body.classList.add('pg');
   staticBurst(document.body, mono ? 900 : 600, true);
   setTimeout(() => document.body.classList.remove('pg'), mono ? 950 : 650);
@@ -257,7 +260,7 @@ function gateFrame() {
     gctx.fillStyle = ['#ff1f2f', '#ffffff', '#000', '#19e6ff', '#ff2bd6'][(Math.random() * 5) | 0];
     gctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * w * .7, 1 + Math.random() * h * .07);
   }
-  setTimeout(() => requestAnimationFrame(gateFrame), 40);
+  setTimeout(() => requestAnimationFrame(gateFrame), isMobile() ? 80 : 40);
 }
 gateFrame();
 setTimeout(() => { gate.classList.remove('glitch'); gate.classList.add('ready'); gateBtn.focus({ preventScroll: true }); }, 1150);
@@ -347,6 +350,7 @@ const FX = { music: 'roll', visuals: 'bars', archive: 'slice', contact: 'spiral'
 function playFx(fx) {
   panel.className = 'reveal-panel'; panel.querySelectorAll('.fx-layer').forEach(e => e.remove()); void panel.offsetWidth;
   panel.classList.add('active', 'fx-' + fx);
+  if (isMobile()) return;                                            // skip heavy effects on mobile
   const layer = cls => { const d = document.createElement('div'); d.className = 'fx-layer ' + cls; panel.appendChild(d); setTimeout(() => d.remove(), 1300); };
   if (fx === 'roll') { layer('vbar'); staticBurst(panel, 600); }      // vertical hold lost
   if (fx === 'bars') layer('bars');                                  // colour-bar test card

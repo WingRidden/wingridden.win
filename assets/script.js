@@ -44,6 +44,7 @@ SIGNS.forEach(c => { const e = mk('span', 'sign' + (c.lit ? ' lit' : ''), signs)
    2. Add a line below: { title: 'Song name', file: 'assets/music/yourfile.mp3' } */
 const TRACKS = [
   { title: 'EXIT', file: 'assets/music/exit.mp3' }
+  { title: 'PLAYBOY', file: 'assets/music/playboy.mp3' }
 ];
 
 /* ---------- Links (edit here) ---------- */

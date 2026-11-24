@@ -177,20 +177,8 @@ function imageGlitch(mono) {
   setTimeout(() => document.body.classList.remove('pg'), mono ? 950 : 650);
 }
 
-/* downscale the full image into a square canvas thumbnail (cover crop, no -t.jpg needed) */
-function makeThumbnail(src, size = 300) {
-  const cv = document.createElement('canvas'); cv.width = cv.height = size;
-  const g = cv.getContext('2d'), img = new Image(); img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    const scale = Math.max(size / img.naturalWidth, size / img.naturalHeight);
-    const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
-    g.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);  // cover: fill & crop centre
-  };
-  img.src = src;
-  return cv;
-}
 const galleryHTML = () => '<figure class="viewer" id="viewer"></figure><div class="gallery">' + VISUALS.map((v, i) =>
-  `<button class="vis${i === currentVisual ? ' active' : ''}" data-v="${i}" data-src="assets/visuals/${v.file}.jpg"><span class="thumb-wrap"></span><span>${v.title}</span></button>`).join('') + '</div>';
+  `<button class="vis${i === currentVisual ? ' active' : ''}" data-v="${i}"><img src="assets/visuals/${v.file}.jpg" alt="${v.title}" loading="lazy"><span>${v.title}</span></button>`).join('') + '</div>';
 
 function showVisual(i) {
   currentVisual = i;
@@ -201,7 +189,7 @@ function showVisual(i) {
   /* fire glitch immediately with current rot, then update rot once hue is known */
   imageGlitch(v.mono);
 
-  getDominantHue(`assets/visuals/${v.file}.jpg`).then(rot => {
+  getDominantHue(`assets/visuals/${v.file}.jpg`).then(rot => {  // reads full img, downsampled internally
     const finalRot = v.rot !== undefined ? v.rot : rot;   // manual override still works
     setTheme(finalRot, v.mono || false);
   });
@@ -214,11 +202,6 @@ function showVisual(i) {
 
 function wireGallery() {
   document.querySelectorAll('.vis').forEach(b => {
-    /* inject canvas thumbnail */
-    const wrap = b.querySelector('.thumb-wrap');
-    const cv = makeThumbnail(b.dataset.src);
-    cv.setAttribute('aria-hidden', 'true');
-    wrap.appendChild(cv);
     b.addEventListener('click', () => {
       showVisual(+b.dataset.v);
       document.getElementById('viewer').scrollIntoView({ behavior: 'smooth', block: 'center' });

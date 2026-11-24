@@ -153,7 +153,7 @@ body.entered .content { opacity: 1; transform: none; }
 .sub-label{}
 :root { --rot: 0deg; --gray: 0; --con: 1; }
 .ambient, .room, .topbar, .hero, .content, .footer { filter: hue-rotate(var(--rot)) grayscale(var(--gray)) contrast(var(--con)); transition: filter 1.4s ease; }
-.vis img, .vis canvas, .viewer img { filter: hue-rotate(calc(var(--rot) * -1)); transition: filter 1.4s ease; }
+.vis img, .viewer img { filter: hue-rotate(calc(var(--rot) * -1)); transition: filter 1.4s ease; }
 
 /* ---------- Visuals gallery ---------- */
 .viewer { margin: 18px 0 0; display: none; }
@@ -164,10 +164,8 @@ body.entered .content { opacity: 1; transform: none; }
 .viewer button:hover { background: rgba(190, 15, 28, .4); }
 .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
 .vis { position: relative; padding: 0; border: 1px solid var(--line); background: #100; cursor: pointer; aspect-ratio: 1; overflow: hidden; }
-.vis img, .vis canvas { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease, filter 1.4s ease; }
-.thumb-wrap { position: absolute; inset: 0; display: block; }
-.thumb-wrap canvas { width: 100%; height: 100%; }
-.vis:hover img, .vis:hover canvas, .vis:focus-visible img, .vis:focus-visible canvas { transform: scale(1.07); }
+.vis img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease, filter 1.4s ease; }
+.vis:hover img, .vis:focus-visible img { transform: scale(1.07); }
 .vis span { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 10px 8px; text-align: left; color: #ffe3de; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; background: linear-gradient(transparent, rgba(10, 0, 2, .9)); }
 .vis.active { border-color: #ff4a54; box-shadow: 0 0 26px rgba(255, 30, 45, .55); }
 .vis:focus-visible { outline: 1px solid #ff4a54; }

@@ -39,13 +39,13 @@ SIGNS.forEach(c => { const e = mk('span', 'sign' + (c.lit ? ' lit' : ''), signs)
   }, { passive: true });
 }
 
-/* ---------- MUSIC: add songs here ----------
-   1. Put the audio file (mp3 recommended) in assets/music/
-   2. Add a line below: { title: 'Song name', file: 'assets/music/yourfile.mp3' } */
-const TRACKS = [
-  { title: 'EXIT', file: 'assets/music/exit.mp3' },
-   { title: 'PLAYBOY', file: 'assets/music/playboy.mp3' }
-];
+/* ---------- MUSIC: auto-loaded from assets/music/tracks.json ----------
+   To add a song:
+     1. Put the .mp3 in assets/music/
+     2. Add a line to assets/music/tracks.json:
+        { "title": "Song Name", "file": "assets/music/yourfile.mp3" }
+   That's it — no changes needed in this file. */
+let TRACKS = [];
 
 /* ---------- Links (edit here) ---------- */
 const LINKS = {
@@ -71,9 +71,11 @@ const linkList = key => '<div class="link-list">' + LINKS[key].map(([n, u]) => u
 const audio = new Audio(); audio.preload = 'metadata';
 let current = -1;
 const fmt = s => isFinite(s) ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : '';
-const playerHTML = () => '<div class="tracks">' + TRACKS.map((t, i) =>
-  `<button class="track" data-i="${i}"><span class="tp">▶</span><span class="tt">${t.title}</span><span class="tm"></span></button>`).join('') +
-  '</div><div class="bar" id="bar"><div class="fill" id="fill"></div></div>';
+const playerHTML = () => TRACKS.length
+  ? '<div class="tracks">' + TRACKS.map((t, i) =>
+      `<button class="track" data-i="${i}"><span class="tp">▶</span><span class="tt">${t.title}</span><span class="tm"></span></button>`).join('') +
+    '</div><div class="bar" id="bar"><div class="fill" id="fill"></div></div>'
+  : '<p class="no-tracks">No tracks yet — add .mp3 files and update tracks.json.</p>';
 function syncPlayer() {
   document.querySelectorAll('.track').forEach(b => {
     const on = +b.dataset.i === current;
@@ -102,6 +104,12 @@ function wirePlayer() {
 audio.addEventListener('ended', () => {
   if (current < TRACKS.length - 1) { current++; audio.src = TRACKS[current].file; audio.play(); } else syncPlayer();
 });
+
+/* ---------- Load tracks from tracks.json (runs once at page load) ---------- */
+fetch('assets/music/tracks.json')
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(data => { TRACKS = data; })
+  .catch(() => { TRACKS = []; });  // silently fall back to empty list if file missing
 
 
 /* ---------- VISUALS: add artwork here ----------
@@ -305,7 +313,7 @@ const panel = document.getElementById('panel');
 const title = document.getElementById('panel-title');
 const copy = document.getElementById('panel-copy');
 const content = {
-  music: ['Music', () => (TRACKS.length ? playerHTML() : '') + '<div class="sub-label">LISTEN ELSEWHERE</div>' + linkList('music')],
+  music: ['Music', () => playerHTML() + '<div class="sub-label">LISTEN ELSEWHERE</div>' + linkList('music')],
   visuals: ['Visuals', () => 'Artwork and covers. Pick one and the whole world takes its colour.' + galleryHTML()],
   archive: ['Archive', 'Lyrics, fragments, notes, and things that do not belong anywhere else.'],
   contact: ['Contact', () => 'Find WingRidden here, or send a message.' + linkList('contact')]

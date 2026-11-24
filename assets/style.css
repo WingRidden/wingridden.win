@@ -147,6 +147,7 @@ body.entered .content { opacity: 1; transform: none; }
 .bar { height: 4px; margin: 14px 0 6px; background: rgba(255, 70, 80, .2); cursor: pointer; }
 .bar .fill { height: 100%; width: 0; background: #ff3a46; box-shadow: 0 0 12px #ff2a36; }
 .sub-label { margin-top: 26px; color: #c0585e; font-size: 9px; letter-spacing: .3em; }
+.no-tracks { color: #c0585e; font-size: 11px; letter-spacing: .16em; margin: 18px 0; }
 
 /* ---------- Theme: clicking a visual rotates the whole palette to that artwork's main colour ---------- */
 .sub-label{}

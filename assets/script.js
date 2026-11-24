@@ -177,14 +177,14 @@ function imageGlitch(mono) {
   setTimeout(() => document.body.classList.remove('pg'), mono ? 950 : 650);
 }
 
-/* downscale the full image into a canvas thumbnail so no -t.jpg files are needed */
+/* downscale the full image into a square canvas thumbnail (cover crop, no -t.jpg needed) */
 function makeThumbnail(src, size = 300) {
   const cv = document.createElement('canvas'); cv.width = cv.height = size;
   const g = cv.getContext('2d'), img = new Image(); img.crossOrigin = 'anonymous';
   img.onload = () => {
-    const r = Math.min(size / img.naturalWidth, size / img.naturalHeight);
-    const w = img.naturalWidth * r, h = img.naturalHeight * r;
-    g.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+    const scale = Math.max(size / img.naturalWidth, size / img.naturalHeight);
+    const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
+    g.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);  // cover: fill & crop centre
   };
   img.src = src;
   return cv;

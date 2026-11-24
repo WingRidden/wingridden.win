@@ -178,7 +178,7 @@ function imageGlitch(mono) {
 }
 
 const galleryHTML = () => '<figure class="viewer" id="viewer"></figure><div class="gallery">' + VISUALS.map((v, i) =>
-  `<button class="vis${i === currentVisual ? ' active' : ''}" data-v="${i}"><img src="assets/visuals/${v.file}.jpg" alt="${v.title}" loading="lazy"><span>${v.title}</span></button>`).join('') + '</div>';
+  `<button class="vis${i === currentVisual ? ' active' : ''}" data-v="${i}"><img src="assets/visuals/${v.file}" alt="${v.title}" loading="lazy"><span>${v.title}</span></button>`).join('') + '</div>';
 
 function showVisual(i) {
   currentVisual = i;
@@ -189,13 +189,13 @@ function showVisual(i) {
   /* fire glitch immediately with current rot, then update rot once hue is known */
   imageGlitch(v.mono);
 
-  getDominantHue(`assets/visuals/${v.file}.jpg`).then(rot => {  // reads full img, downsampled internally
+  getDominantHue(`assets/visuals/${v.file}`).then(rot => {
     const finalRot = v.rot !== undefined ? v.rot : rot;   // manual override still works
     setTheme(finalRot, v.mono || false);
   });
 
   box.className = 'viewer';
-  box.innerHTML = `<img src="assets/visuals/${v.file}.jpg" alt="${v.title}"><figcaption><span>${v.title}</span><button type="button" id="resetTheme">RESET THEME</button></figcaption>`;
+  box.innerHTML = `<img src="assets/visuals/${v.file}" alt="${v.title}"><figcaption><span>${v.title}</span><button type="button" id="resetTheme">RESET THEME</button></figcaption>`;
   void box.offsetWidth; box.className = 'viewer on';
   document.getElementById('resetTheme').addEventListener('click', () => showVisual(-1));
 }

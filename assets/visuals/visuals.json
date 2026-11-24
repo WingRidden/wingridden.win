@@ -6,6 +6,5 @@
   { "file": "burn-ep",          "title": "Burn."            },
   { "file": "close-and-far",    "title": "Haze"             },
   { "file": "mayday",           "title": "Mayday"           },
-  { "file": "playboy",          "title": "Playboy", "mono": true },
-  { "file": "songs i made in my room new",          "title": "songs i made in my room" }
+  { "file": "playboy",          "title": "Playboy", "mono": true }
 ]

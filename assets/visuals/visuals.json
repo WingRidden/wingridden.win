@@ -6,5 +6,6 @@
   { "file": "burn-ep",          "title": "Burn."            },
   { "file": "close-and-far",    "title": "Haze"             },
   { "file": "mayday",           "title": "Mayday"           },
-  { "file": "playboy",          "title": "Playboy", "mono": true }
+  { "file": "playboy",          "title": "Playboy", "mono": true },
+  { "file": "GHOSTS",           "title": "GHOSTS"           }
 ]

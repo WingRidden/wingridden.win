@@ -1,11 +1,10 @@
 [
-  { "file": "the-darkest-pink", "title": "The Darkest Pink" },
-  { "file": "violet",           "title": "Violet"           },
-  { "file": "love-overdose",    "title": "Love Overdose"    },
-  { "file": "psydelich",        "title": "Are You Lost?"    },
-  { "file": "burn-ep",          "title": "Burn."            },
-  { "file": "close-and-far",    "title": "Haze"             },
-  { "file": "mayday",           "title": "Mayday"           },
-  { "file": "playboy",          "title": "Playboy", "mono": true },
-  { "file": "GHOSTS",           "title": "GHOSTS"           }
+  { "file": "the-darkest-pink.jpg", "title": "The Darkest Pink" },
+  { "file": "violet.jpg",           "title": "Violet"           },
+  { "file": "love-overdose.jpg",    "title": "Love Overdose"    },
+  { "file": "psydelich.jpg",        "title": "Are You Lost?"    },
+  { "file": "burn-ep.jpg",          "title": "Burn."            },
+  { "file": "close-and-far.jpg",    "title": "Haze"             },
+  { "file": "mayday.jpg",           "title": "Mayday"           },
+  { "file": "playboy.jpg",          "title": "Playboy", "mono": true }
 ]

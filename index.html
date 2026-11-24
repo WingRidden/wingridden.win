@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" class="locked">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2a0307">
+  <title>WINGRIDDEN — An unfamiliar place</title>
+  <meta name="description" content="The official website of WingRidden. Music, visuals, and an unfamiliar place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="locked gated">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="thin" x="-5%" y="-10%" width="110%" height="120%"><feMorphology operator="erode" radius=".7"/></filter>
+  </svg>
+  <div class="ambient"></div><div class="room" id="room" aria-hidden="true"></div>
+  <div class="dark"></div><div class="scan"></div><div class="grain"></div>
+
+  <div id="gate" class="glitch">
+    <canvas id="gate-static"></canvas><div class="vg"></div>
+    <button id="gate-enter" data-text="ENTER" aria-label="Enter">ENTER</button>
+  </div>
+  <canvas id="wormhole" aria-hidden="true"></canvas>
+  <div id="tv" aria-hidden="true"><div class="half top"></div><div class="half bot"></div><div class="tvline"></div></div>
+
+  <header class="topbar">
+    <a class="brand-small" href="#home">W / R</a>
+    <div class="top-meta"><span>INDEPENDENT ARTIST</span><span>2017 — ∞</span></div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">A place between somewhere and nowhere</div>
+        <h1 data-text="WingRidden">WingRidden</h1>
+        <p class="tagline">An unfamiliar place</p>
+        <button class="enter" id="enter">ENTER <span>↗</span></button>
+      </div>
+      <div class="side-note left">Sound · Image · Memory</div>
+      <div class="side-note right">Do not adjust your eyes</div>
+    </section>
+
+    <section class="content" id="inside">
+      <div class="section-label">001 / TRANSMISSION</div>
+      <p class="intro">Rid all my wings, they drown in my lungs<br>Rain as heavy as the world in my arms</p>
+      <p class="intro-sub">This is the world of WingRidden. An evolving archive of sound, images, and fragments. Stay a while.</p>
+      <div class="nav-grid">
+        <a class="nav-card" href="#music" data-panel="music"><small>002 / SOUND</small><strong>Music</strong><span>RELEASES & RECORDINGS ↗</span></a>
+        <a class="nav-card" href="#visuals" data-panel="visuals"><small>003 / IMAGE</small><strong>Visuals</strong><span>ARTWORK & MOVING IMAGES ↗</span></a>
+        <a class="nav-card" href="#archive" data-panel="archive"><small>004 / FRAGMENTS</small><strong>Archive</strong><span>NOTES, LYRICS & OTHER THINGS ↗</span></a>
+        <a class="nav-card" href="#contact" data-panel="contact"><small>005 / SIGNAL</small><strong>Contact</strong><span>SOCIALS & EMAIL ↗</span></a>
+      </div>
+      <div class="reveal-panel" id="panel"><div class="panel-in">
+        <button class="close" id="close" aria-label="Close panel">[ CLOSE × ]</button>
+        <h2 id="panel-title">Music</h2>
+        <div id="panel-copy">The sound archive is being assembled. Come back soon.</div>
+      </div></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <span>WINGRIDDEN © 2026</span><span>AN UNFINISHED WORLD</span><a href="#contact" data-panel="contact">CONTACT ↗</a>
+  </footer>
+  <script src="assets/script.js"></script>
+</body>
+</html>

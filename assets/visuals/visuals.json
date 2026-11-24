@@ -6,5 +6,6 @@
   { "file": "burn-ep.jpg",          "title": "Burn."            },
   { "file": "close-and-far.jpg",    "title": "Haze"             },
   { "file": "mayday.jpg",           "title": "Mayday"           },
-  { "file": "playboy.jpg",          "title": "Playboy", "mono": true }
+  { "file": "playboy.jpg",          "title": "Playboy", "mono": true },
+  { "file": "GHOSTS.png",           "title": "GHOSTS"           }
 ]

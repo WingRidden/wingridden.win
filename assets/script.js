@@ -284,10 +284,14 @@ async function tvOn() {
 let powering = false;
 gateBtn.addEventListener('click', async () => {
   if (powering) return; powering = true;
+  if (isMobile()) {
+    gateLive = false; gate.style.display = 'none'; document.body.classList.remove('gated');
+    return;
+  }
   await tvOff();
   gateLive = false; gate.style.display = 'none'; document.body.classList.remove('gated');
-  const h1 = document.querySelector('h1'); h1.style.animation = 'none'; void h1.offsetWidth; h1.style.animation = '';   // replay title reveal
-  await sleep(550);                       // black screen
+  const h1 = document.querySelector('h1'); h1.style.animation = 'none'; void h1.offsetWidth; h1.style.animation = '';
+  await sleep(550);
   await tvOn();
   document.querySelector('.hero-content').animate([{ opacity: 0 }, { opacity: 1 }, { opacity: .2 }, { opacity: 1 }, { opacity: .6 }, { opacity: 1 }], { duration: 700, easing: 'steps(1)' });
 });
@@ -298,10 +302,19 @@ let opening = false;
 function enterSite() {
   document.documentElement.classList.remove('locked'); document.body.classList.remove('locked');
   document.body.classList.add('entered');
-  scrollTo({ top: document.getElementById('inside').getBoundingClientRect().top + scrollY, behavior: 'instant' });
+  const inside = document.getElementById('inside');
+  const top = inside.getBoundingClientRect().top + window.pageYOffset;
+  try { window.scrollTo({ top, behavior: 'instant' }); } catch(e) { window.scrollTo(0, top); }
 }
 enter.addEventListener('click', () => {
   if (opening) return; opening = true;
+  /* on mobile skip the heavy wormhole canvas and just enter directly */
+  if (isMobile()) {
+    const hero = document.querySelector('.hero-content');
+    hero.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+    setTimeout(() => { enterSite(); opening = false; }, 350);
+    return;
+  }
   const W = wh.width = Math.ceil(innerWidth / 2), H = wh.height = Math.ceil(innerHeight / 2);
   wh.style.display = 'block'; wh.style.opacity = 1;
   const hero = document.querySelector('.hero-content');
@@ -315,12 +328,12 @@ enter.addEventListener('click', () => {
     const g = wctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(1, R)); g.addColorStop(0, '#000'); g.addColorStop(.55, '#12000a'); g.addColorStop(1, '#5a0010');
     wctx.fillStyle = g; wctx.fillRect(0, 0, W, H);
     wctx.shadowColor = '#ff2a3a'; wctx.shadowBlur = 12;
-    for (let a = 0; a < 9; a++) {                                  // spiral arms
+    for (let a = 0; a < 9; a++) {
       wctx.beginPath();
       for (let r = 2; r < R; r += 6) { const ang = a * Math.PI * 2 / 9 + r * .012 + p * 9, x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r; r === 2 ? wctx.moveTo(x, y) : wctx.lineTo(x, y); }
       wctx.strokeStyle = 'rgba(255,60,75,.4)'; wctx.lineWidth = 3; wctx.stroke();
     }
-    for (let k = 0; k < 22; k++) {                                 // rings rushing outward
+    for (let k = 0; k < 22; k++) {
       const z = ((k / 22) + p * 2.6) % 1, r = R * Math.pow(z, 1.9);
       wctx.beginPath(); wctx.arc(cx, cy, r, 0, 7);
       wctx.strokeStyle = `rgba(255,${60 + z * 120 | 0},${70 + z * 90 | 0},${Math.sin(z * Math.PI) * .85})`; wctx.lineWidth = 1 + z * z * 16; wctx.stroke();
@@ -328,7 +341,7 @@ enter.addEventListener('click', () => {
     const c = wctx.createRadialGradient(cx, cy, 0, cx, cy, 40 + 30 * Math.sin(p * 30)); c.addColorStop(0, 'rgba(255,255,255,.9)'); c.addColorStop(1, 'rgba(255,40,60,0)');
     wctx.fillStyle = c; wctx.fillRect(0, 0, W, H);
     wctx.restore();
-    wctx.beginPath(); wctx.arc(cx, cy, R, 0, 7); wctx.strokeStyle = '#ff8a80'; wctx.shadowBlur = 40; wctx.lineWidth = 6; wctx.stroke();   // glowing rim
+    wctx.beginPath(); wctx.arc(cx, cy, R, 0, 7); wctx.strokeStyle = '#ff8a80'; wctx.shadowBlur = 40; wctx.lineWidth = 6; wctx.stroke();
     if (p > .55 && !jumped) { jumped = true; enterSite(); }
     if (p > .8) wh.style.opacity = Math.max(0, 1 - (p - .8) / .2);
     if (p < 1) requestAnimationFrame(frame);
